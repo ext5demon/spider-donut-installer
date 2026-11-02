@@ -1,0 +1,53 @@
+# Dependencies and generated application packages
+node_modules/
+/release/
+/dist/
+/build/
+/out/
+*.exe
+*.dll
+*.asar
+*.zip
+*.tar.gz
+
+# Test output, caches and local jobs
+/test-output/
+/.cache/
+/coverage/
+/.nyc_output/
+/jobs/
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+
+# Private issuer material, developer keys and local credentials
+.env
+.env.*
+.spider-donut-owner/
+issuer-private*
+*.pem
+*.key
+*.p12
+*.pfx
+*.spiderkey
+*.spiderbackup
+credentials.json
+secrets.json
+
+# User-owned game data and compiled PS3 packages
+data.win
+game.win
+game.unx
+[Tt][Ee][Xx][Tt][Uu][Rr][Ee][Ss].[Bb][Ii][Nn]
+*.pkg
+*.pkg.sha256
+*.bsv
+*.bsv.ogg
+
+# Source directory, including Git installations with a global core exclusion
+!/core/
+!/core/**

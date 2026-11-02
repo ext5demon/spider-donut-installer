@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spider Donut Installer</title>
+  <link rel="stylesheet" href="aqua.css">
+</head>
+<body>
+  <header id="menubar" aria-label="Application menu">
+    <button class="menu-trigger brand" data-menu="application" aria-haspopup="menu" aria-expanded="false"><img src="../assets/logo.png" alt=""> <b>Spider Donut Installer</b></button>
+    <button class="menu-trigger" data-menu="file" aria-haspopup="menu" aria-expanded="false">File</button>
+    <button class="menu-trigger" data-menu="edit" aria-haspopup="menu" aria-expanded="false">Edit</button>
+    <button class="menu-trigger" data-menu="view" aria-haspopup="menu" aria-expanded="false">View</button>
+    <button class="menu-trigger" data-menu="window" aria-haspopup="menu" aria-expanded="false">Window</button>
+    <button class="menu-trigger" data-menu="help" aria-haspopup="menu" aria-expanded="false">Help</button>
+    <span class="menu-spacer"></span><span class="menu-status" id="menu-status">Ready</span><time id="clock"></time>
+  </header>
+  <main id="desktop" aria-label="Desktop">
+    <button class="desktop-icon" id="desktop-output" data-desktop-action="output" style="right:28px;top:30px"><img src="../assets/folder.svg" alt=""><span>USB Builds</span></button>
+    <button class="desktop-icon" id="desktop-help" data-desktop-action="help" style="right:28px;top:132px"><img src="../assets/document.svg" alt=""><span>Read Me</span></button>
+    <section class="aqua-window" id="installer-window" aria-label="Spider Donut Installer">
+      <div class="drawer" id="log-drawer" aria-label="Build log" hidden><div class="drawer-heading">Installer Log <button id="clear-log" class="small-button" title="Clear displayed log">Clear</button></div><pre id="build-log" tabindex="0">Build output will appear here.</pre></div>
+      <div class="window-surface">
+        <header class="titlebar" data-drag><div class="traffic-lights"><button class="light close" aria-label="Close installer"><span>×</span></button><button class="light minimize" aria-label="Minimize installer"><span>−</span></button><button class="light zoom" aria-label="Zoom installer"><span>+</span></button></div><span>Spider Donut Installer</span><button class="toolbar-toggle" id="toggle-log" aria-label="Show build log" title="Show build log"></button></header>
+        <div class="installer-body">
+          <aside class="sidebar"><div class="sidebar-art"><img src="../assets/logo.png" alt="Spider Donut"></div><ol id="steps"></ol><div class="sidebar-bottom">Spider Donut<br><span>PS3 Build Assistant</span></div></aside>
+          <div class="document">
+            <div id="page" tabindex="-1"><p class="status-line"><span class="spinner"></span> Opening the installer…</p></div>
+            <footer class="wizard-footer"><button class="aqua-button" id="help-button" aria-label="Installer help">?</button><span id="footer-note"></span><div class="footer-actions"><button class="aqua-button" id="back">Go Back</button><button class="aqua-button default" id="next">Continue</button></div></footer>
+          </div>
+        </div>
+        <div class="resize-grip" aria-label="Resize installer" tabindex="0" role="separator"></div>
+      </div>
+      <div id="sheet-host"></div>
+    </section>
+    <section class="aqua-window utility-window" id="help-window" aria-label="Installer Help" hidden>
+      <div class="window-surface"><header class="titlebar" data-drag><div class="traffic-lights"><button class="light close" aria-label="Close help"><span>×</span></button></div><span>Spider Donut Help</span></header><div class="help-content">
+        <img src="../assets/logo.png" alt="" class="help-logo"><h1>Spider Donut Installer</h1><p>Build the PS3 runner and prepare your own DELTARUNE chapters for a USB drive.</p>
+        <h2>Before you begin</h2><p>You need a Windows 10/11 x64 PC, an internet connection, at least 8 GB free for build tools, and enough additional space for your chapters and finished ZIP. The app prepares a separate Ubuntu build environment using Windows Subsystem for Linux. Windows may ask for administrator access and a restart on first use.</p>
+        <h2>Your game folder</h2><p>Choose the DELTARUNE folder containing <code>chapter1_windows</code>, <code>chapter2_windows</code>, and so on. You can also choose an individual chapter folder. Each selected chapter gets its own PS3 <code>TEXTURES.BIN</code>. Your original files stay in place.</p>
+        <h2>Developer access</h2><p>Choose Dev Beta, open the encrypted <code>.spiderkey</code> file supplied by the owner, then enter its password. Keys are checked locally and can expire. Keep the file and password safe.</p>
+        <h2>Putting the build on your PS3</h2><p>Extract the finished ZIP to the root of a FAT32 USB drive. Keep the PKG and DELTARUNE folder at the root. Install the PKG through Package Manager on your HEN/CFW PS3, then launch Spider Donut and choose a chapter.</p>
+        <pre class="folder-tree">USB drive/
+  spider-donut-….pkg
+  DELTARUNE/
+    chapter1_windows/
+      data.win
+      TEXTURES.BIN
+      …
+  README-FIRST.txt
+  BUILD-INFO.json</pre>
+        <h2>If a build stops</h2><p>Open View → Show Build Log for the compiler output. You can go back and retry. Completed downloads are cached. Cancelling a build never changes your original game files.</p>
+        <p class="help-links"><button class="link-button" id="project-link">Project on GitHub</button><button class="link-button" id="wsl-link">Windows setup help</button></p>
+        <p class="fine-print">Installer <span id="app-version">1.1.0</span> · Aqua recreation for Spider Donut.<br>Not affiliated with Apple, Sony or Toby Fox.</p>
+      </div><div class="resize-grip" aria-label="Resize help" tabindex="0" role="separator"></div></div>
+    </section>
+    <section class="aqua-window utility-window" id="owner-window" aria-label="Developer Keys" hidden style="width:550px;height:580px;top:70px">
+      <div class="window-surface"><header class="titlebar" data-drag><div class="traffic-lights"><button class="light close" aria-label="Close developer keys"><span>×</span></button></div><span>Developer Keys</span></header><div class="help-content">
+        <h1>Create a Developer Key</h1><p>Save an encrypted, signed file for your developer.</p><form id="key-form"><label class="form-label" for="developer-name">Developer name</label><input id="developer-name" type="text" maxlength="100" required autocomplete="off"><div class="key-fields"><div><label class="form-label" for="developer-expiry">Expires (YYYY-MM-DD)</label><input id="developer-expiry" type="text" required pattern="\d{4}-\d{2}-\d{2}" placeholder="2027-01-31" autocomplete="off"></div><div><label class="form-label" for="developer-ref">Development branch or commit</label><input id="developer-ref" type="text" required value="main" maxlength="100" autocomplete="off"></div></div><label class="form-label" for="developer-password">Password for this developer file</label><div class="password-row"><input class="password-field" id="developer-password" type="password" required minlength="16" maxlength="1024" autocomplete="new-password" spellcheck="false"><button id="generate-license-password" class="aqua-button" type="button">Generate</button></div><label class="show-password"><input type="checkbox" id="show-license-password"> Show password to copy it</label><p class="small subtle">Give the developer this password separately from the file. Use a different password for each developer.</p><div class="owner-actions"><span id="key-result" role="status"></span><button class="aqua-button default" type="submit">Save Key File…</button></div></form><hr class="owner-rule"><button class="aqua-button" id="owner-backup">Export Owner Backup…</button><p class="small subtle" style="margin-top:12px">Your signing key is encrypted for your Windows account. Keep an encrypted owner backup so you can recover it after reinstalling Windows.</p>
+      </div><div class="resize-grip" aria-label="Resize developer keys" tabindex="0" role="separator"></div></div>
+    </section>
+    <section class="aqua-window utility-window" id="backup-window" aria-label="Owner Backup" hidden style="width:520px;height:440px;top:120px">
+      <div class="window-surface"><header class="titlebar" data-drag><div class="traffic-lights"><button class="light close" aria-label="Close owner backup"><span>×</span></button></div><span>Owner Signing-Key Backup</span></header><div class="help-content"><h1>Export an Encrypted Backup</h1><p>This backup lets you restore your signing identity on another Windows installation. Keep it private.</p><form id="backup-form"><label class="form-label" for="backup-password">Separate backup password (at least 16 characters)</label><div class="password-row"><input class="password-field" type="password" id="backup-password" required minlength="16" maxlength="1024" autocomplete="new-password" spellcheck="false"><button class="aqua-button" id="generate-backup-password" type="button">Generate</button></div><label class="show-password"><input type="checkbox" id="show-backup-password"> Show password to copy it</label><p class="small subtle">Use a separate password that you never give to developers. The backup cannot be recovered without its password.</p><div class="owner-actions"><span id="backup-result" role="status"></span><button class="aqua-button default" type="submit">Save Backup…</button></div></form></div><div class="resize-grip" aria-label="Resize owner backup" tabindex="0" role="separator"></div></div>
+    </section>
+  </main>
+  <div id="menus"></div>
+  <nav id="dock" aria-label="Dock"><div class="dock-background"></div><button class="dock-item" data-dock="output" aria-label="Open USB builds"><span class="dock-tooltip">USB Builds</span><img src="../assets/folder.svg" alt=""></button><button class="dock-item running" data-dock="installer" aria-label="Spider Donut Installer"><span class="dock-tooltip">Spider Donut Installer</span><img src="../assets/logo.png" alt=""></button><button class="dock-item" data-dock="help" aria-label="Installer Help"><span class="dock-tooltip">Installer Help</span><img src="../assets/help.svg" alt=""></button><span class="dock-separator"></span><button class="dock-item minimized-item" data-dock="restore" aria-label="Restore installer" hidden><span class="dock-tooltip">Spider Donut Installer</span><img id="minimized-preview" src="../assets/document.svg" alt=""></button></nav>
+  <canvas id="genie-canvas" hidden></canvas>
+  <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+  <script src="window.js"></script><script src="app.js"></script>
+</body>
+</html>

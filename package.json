@@ -1,0 +1,69 @@
+{
+  "name": "spider-donut-installer",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Build Spider Donut and prepare a PS3 USB drive with your own game files.",
+  "author": "Spider Donut",
+  "license": "MPL-2.0",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "package": "electron-builder --win portable --x64",
+    "keys": "node tools/keys.cjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@electron/asar": "3.4.1",
+    "electron": "45.2.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "io.spiderdonut.installer",
+    "productName": "Spider Donut Installer",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "config.json",
+      "core/**",
+      "ui/**",
+      "assets/**",
+      "worker/**",
+      "package.json",
+      "!**/__pycache__/**",
+      "!**/*.pyc",
+      "!**/*.spiderkey",
+      "!**/*.spiderbackup",
+      "!**/*.pem",
+      "!**/*.key",
+      "!**/.env*",
+      "!**/credentials.json",
+      "!**/secrets.json"
+    ],
+    "afterPack": "tools/audit-package.cjs",
+    "asarUnpack": [
+      "worker/**"
+    ],
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "icon": "assets/app.ico",
+      "signExecutable": false
+    },
+    "portable": {
+      "artifactName": "Spider-Donut-Installer-${version}.exe"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ext5demon/spider-donut-installer.git"
+  },
+  "homepage": "https://github.com/ext5demon/spider-donut-installer#readme",
+  "bugs": {
+    "url": "https://github.com/ext5demon/spider-donut-installer/issues"
+  }
+}

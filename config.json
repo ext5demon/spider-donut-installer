@@ -1,0 +1,11 @@
+{
+  "repository": "ext5demon/donut-spider",
+  "devRef": "main",
+  "keyAudience": "spider-donut-installer",
+  "developerPublicKey": "MCowBQYDK2VwAyEAshJ7S7LkDkYgob2ZWW5vV8QTNaS8JpokfZzm6tn71hg=",
+  "sdk": {
+    "url": "https://github.com/ps3dev/ps3dev/releases/download/nightly-2026-10-12/ps3dev-linux-X64.tar.gz",
+    "sha256": "76b1b3bc9ac260a4ece86da520225da7f2f4e334174e37b850093ff925eeb900"
+  },
+  "preprocessorCommit": "32664f834127c229d19411e6d3488220d8062b63"
+}
