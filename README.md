@@ -6,7 +6,7 @@ Installer source: [ext5demon/spider-donut-installer](https://github.com/ext5demo
 
 ## Player workflow
 
-1. Choose **Latest Beta**, **Dev Beta**, or **Older Versions**. Public versions come from the repository's published `vâ€¦` releases. Each source revision is resolved to an exact commit before downloading it.
+1. Choose **Latest Beta**, **Dev Beta**, or **Older Versions**. Public versions come from the repository's published releases with version tags such as `v0.3`. Each source revision is resolved to an exact commit before downloading it.
 2. For Dev Beta, import the encrypted `.spiderkey` file and enter the password supplied separately by the owner.
 3. Choose the DELTARUNE folder containing `chapter1_windows`, `chapter2_windows`, and so on. Select the chapters to include.
 4. Choose where to save the ZIP, then click **Build**.
@@ -38,7 +38,7 @@ Native Linux with Python 3.12+ can run the worker for integration testing. On Li
 
 Build logs are stored beneath Electron's user-data folder in `jobs/<job-id>/build.log`. Linux work files and tool caches are inside the managed distribution at `/root/.cache/spider-donut/`. Temporary compilation and chapter staging files are removed when the worker exits; reusable tools and downloads stay cached. Cancelling signals the worker, which terminates its own compiler process groups. A cancelled build can be retried with the same selections; an interrupted compilation is restarted in a fresh job folder.
 
-## Local developer key files â€” owner instructions
+## Local developer key files — owner instructions
 
 Version 1.1 encrypts developer records with **AES-256-GCM**, deriving a separate key per file using **scrypt**. The complete encrypted record is also signed with **Ed25519**. The app contains only the public verification key from `config.json`; it contains no shared decryption password or private signing key. See [SECURITY.md](SECURITY.md) for the design, researched failure modes and limitations.
 
@@ -50,9 +50,9 @@ The issuer tool defaults to:
 
 The official issuer is already initialized and its private key is kept outside this repository. On the owner's computer, it is stored as a Windows DPAPI encrypted container at the legacy `.pem` path above. Its signing identity is preserved. It can be unlocked only in the owner's Windows user context; copying that protected file is not a portable recovery backup. **Do not run `init` again or replace the public key unless deliberately rotating the issuer.**
 
-On the owner's computer, open **Spider Donut Installer â†’ Developer Keysâ€¦**. Enter the developer's name and expiry date, then choose **Generate** to create a random file password. Use **Show password** to copy it, save the key file, and give the password to the developer separately. Use a different password per developer. The creation menu appears only when the matching issuer can be unlocked locally.
+On the owner's computer, open **Spider Donut Installer → Developer Keys…**. Enter the developer's name and expiry date, then choose **Generate** to create a random file password. Use **Show password** to copy it, save the key file, and give the password to the developer separately. Use a different password per developer. The creation menu appears only when the matching issuer can be unlocked locally.
 
-Choose **Export Owner Backupâ€¦** to create a password-encrypted `.spiderbackup` recovery file. Give that backup a separate password which you never share with developers. Keep the backup and password private and available before reinstalling Windows or moving to another account. The backup cannot be recovered without its password.
+Choose **Export Owner Backup…** to create a password-encrypted `.spiderbackup` recovery file. Give that backup a separate password which you never share with developers. Keep the backup and password private and available before reinstalling Windows or moving to another account. The backup cannot be recovered without its password.
 
 Alternatively, issue a key file using Node.js:
 
