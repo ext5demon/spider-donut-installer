@@ -8,9 +8,9 @@ Validated locally before distribution:
 - Chapter detection, checkboxes, back navigation and output review work. Missing WSL produces the setup sheet; declining it starts no installation.
 - Menus, submenu selection, Help, log drawer, window focus, drag, zoom, minimize/restore using the captured-content Genie animation, and attached sheets were checked in the running app and screenshots.
 - Renderer-contract fixtures check indeterminate/determinate progress and completion screens. These fixtures exist only in the test harness. Production uses the actual worker process.
-- Eleven Node tests pass, covering core behavior, encrypted licenses, DPAPI migration, backup recovery and release privacy. The ten core/cryptography tests also pass under Electron's own Node/crypto runtime. Three filesystem/archive worker tests pass on Windows; all four worker tests, including Linux subprocess-group cancellation, passed in the original Linux integration. Cleanup preserves original files and sibling jobs and rejects an escaping job identity.
+- Eleven Node tests pass, covering core behavior, developer access, owner-key migration, backup recovery and release privacy. The ten core and key-handling tests also pass under Electron's runtime. Three filesystem/archive worker tests pass on Windows; all four worker tests, including Linux subprocess-group cancellation, passed in the original Linux integration. Cleanup preserves original files and sibling jobs and rejects an escaping job identity.
 
-Version 1.1 adds encryption and key-storage protection. The existing owner signing identity was preserved during migration from plaintext to DPAPI storage. New keys require the encrypted v2 format; old plaintext keys are rejected. See SECURITY.md for the researched design and known limits. Packaging runs a privacy audit before producing the executable.
+Version 1.1 adds password-protected developer files and owner-key storage protection. The existing owner signing identity was preserved during migration. Old developer files must be reissued for this version. Packaging runs a privacy audit before producing the executable.
 
 ## Real build worker integration
 

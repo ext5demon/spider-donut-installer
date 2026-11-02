@@ -40,7 +40,7 @@ Build logs are stored beneath Electron's user-data folder in `jobs/<job-id>/buil
 
 ## Local developer key files — owner instructions
 
-Version 1.1 encrypts developer records with **AES-256-GCM**, deriving a separate key per file using **scrypt**. The complete encrypted record is also signed with **Ed25519**. The app contains only the public verification key from `config.json`; it contains no shared decryption password or private signing key. See [SECURITY.md](SECURITY.md) for the design, researched failure modes and limitations.
+Dev Beta requires a developer key file and its separate password, supplied by the owner. The private issuer key, developer files, passwords and owner backups are kept outside this repository and are not bundled with the app.
 
 The issuer tool defaults to:
 
@@ -48,7 +48,7 @@ The issuer tool defaults to:
 %USERPROFILE%\.spider-donut-owner\issuer-private.pem
 ```
 
-The official issuer is already initialized and its private key is kept outside this repository. On the owner's computer, it is stored as a Windows DPAPI encrypted container at the legacy `.pem` path above. Its signing identity is preserved. It can be unlocked only in the owner's Windows user context; copying that protected file is not a portable recovery backup. **Do not run `init` again or replace the public key unless deliberately rotating the issuer.**
+The official issuer is already initialized and its private key is kept outside this repository. It can be unlocked only in the owner's Windows user context; copying that protected file is not a portable recovery backup. **Do not run `init` again or replace the public key unless deliberately rotating the issuer.**
 
 On the owner's computer, open **Spider Donut Installer → Developer Keys…**. Enter the developer's name and expiry date, then choose **Generate** to create a random file password. Use **Show password** to copy it, save the key file, and give the password to the developer separately. Use a different password per developer. The creation menu appears only when the matching issuer can be unlocked locally.
 
@@ -69,7 +69,7 @@ node tools/keys.cjs backup --out "C:\Private\owner.spiderbackup"
 node tools/keys.cjs restore --backup "C:\Private\owner.spiderbackup"
 ```
 
-Restore on the new Windows account using the backup password. The matching public key must already be present in `config.json`. Restore refuses to overwrite an existing issuer file; move an old unusable container aside first, or use a new `--issuer` path. It writes Windows-protected storage, never a plaintext private-key export. `node tools/keys.cjs protect` explicitly migrates a matching legacy plaintext issuer in place after verifying a DPAPI round trip.
+Restore on the new Windows account using the backup password. The matching public key must already be present in `config.json`. Restore refuses to overwrite an existing issuer file; move an old unusable container aside first, or use a new `--issuer` path. Use `node tools/keys.cjs protect` to migrate a matching legacy issuer file to the current protected storage.
 
 For a new, independent issuer only:
 
